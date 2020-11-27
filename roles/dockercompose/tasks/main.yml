@@ -1,0 +1,11 @@
+---
+- name: Remove dockercompose if installed from CentOS repo
+  file:
+    path: /usr/local/bin/docker-compose
+    state: absent
+
+- name: "Configuring docker-ce repo"
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '+x'

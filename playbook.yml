@@ -1,0 +1,9 @@
+#Install wordpress
+---
+- name: Install docker in vpc
+  hosts: hostserver1
+  gather_facts: false
+  become: true
+  roles:
+    - docker
+    - dockercompose

@@ -1,0 +1,40 @@
+---
+
+#Cek docker ada atau tidak
+- name: Remove docker if installed from CentOS repo
+  yum:
+    name: "{{ item }}"
+    state: removed
+
+  with_items:
+  - docker
+  - docker-client
+  - docker-client-latest
+  - docker-common
+  - docker-latest
+  - docker-latest-logrotate
+  - docker-logrotate
+  - docker-engine
+#update centos
+- name: Install aptitude using apt
+  yum: name=* state=latest update_cache=yes
+#Install packages docker
+- name: Install required system packages
+  yum: name={{ item }} state=latest update_cache=yes
+  loop: [ 'yum-utils', 'curl', 'python3-pip', 'python3-setuptools']
+#configure docker repo
+- name: "Configuring docker-ce repo"
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+#install docker
+- name: Install Docker
+  yum:
+    name: docker-ce
+    state: latest
+#start docker
+- name: Start Docker service and ensure
+  service:
+    name: docker
+    state: started
+    enabled: yes

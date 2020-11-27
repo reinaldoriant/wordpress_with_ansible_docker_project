@@ -1,0 +1,20 @@
+{
+  "logger": {
+    "title": "Remote Sync"
+  },
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": false,
+  "hostname": "128.199.248.181",
+  "port": "22",
+  "target": "/root/deploy-wordpress",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "root",
+  "keyfile": "D:\\BELAJAR\\DEVOPS\\kuncikebahagiaan\\kunci-abadi.ppk",
+  "passphrase": "Aldo1029384756$$",
+  "watch": [],
+  "transport": "scp"
+}
