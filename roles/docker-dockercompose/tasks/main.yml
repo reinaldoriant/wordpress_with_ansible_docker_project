@@ -1,0 +1,46 @@
+---
+- name: Update APT package cache
+  apt:
+    update_cache: yes
+
+- name: Install package prerequisites for Docker
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - python-docker
+    - python3-pip
+    - python-pip
+    - python
+    - curl
+    - software-properties-common
+    - ca-certificates
+
+- name: Install pip docker modules
+  pip:
+    name:
+      - docker
+      - docker-compose
+      - pyyaml
+
+- name: Add Docker repo key
+  # yes, use `shell` because w/ apt-key it fails on 14.04
+  shell: "curl -sSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+
+- name: Add Docker repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    update_cache: yes
+
+- name: Install docker package
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Ensure docker service is started
+  service:
+    name: docker
+    state: started
+    enabled: yes

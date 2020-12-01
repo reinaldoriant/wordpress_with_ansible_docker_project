@@ -1,0 +1,27 @@
+---
+- name: Remove directory
+  file:
+    path: /root/data-wordpresscompose
+    state: absent
+- name: create directory for wordpress installations
+  file:
+    path: /root/data-wordpresscompose
+    state: directory
+    mode: 0755
+- name: Create docker-compose file for wordpress
+  template:
+    src: /root/wordpress-installation/roles/file/docker-compose.yml
+    dest: /root/data-wordpresscompose/docker-compose.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: install pip
+  command: python /tmp/get-pip.py
+
+- name: Create WP + MySQL
+  shell: docker-compose up -d
+  args:
+    executable: /root/data-wordpresscompose
+    
+ 

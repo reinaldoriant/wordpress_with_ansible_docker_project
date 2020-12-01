@@ -1,2 +1,2 @@
 [hostserver1]
-server1 ansible_host=128.199.169.76 ansible_ssh_pass=Aldo1029384756$$
+server1 ansible_host=192.168.1.230 ansible_ssh_pass=Bisa123Bisa
